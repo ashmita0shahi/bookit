@@ -12,7 +12,7 @@ class _DashboardState extends State<Dashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Text("This is dashboard"),
+        child: Text("This is to start"),
       ),
     );
   }
