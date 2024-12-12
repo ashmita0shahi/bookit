@@ -10,9 +10,9 @@ void main() {
       initialRoute: "/",
       debugShowCheckedModeBanner: false,
       routes: {
-        '/sp': (context) => SplashScreen(),
+        '/': (context) => SplashScreen(),
         '/login': (context) => LoginPage(),
-        "/": (context) => RegisterPage(),
+        "/register": (context) => RegisterPage(),
         "/dashboard": (context) => Dashboard(),
       }));
 }
