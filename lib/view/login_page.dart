@@ -1,3 +1,4 @@
+import 'package:bookit/view/dashboard.dart';
 import 'package:bookit/view/register_page.dart';
 import 'package:flutter/material.dart';
 
@@ -85,7 +86,13 @@ class _LoginPageState extends State<LoginPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0),
                             )),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Dashboard()),
+                          );
+                        },
                         child: const Text(
                           "Log In",
                           style: TextStyle(fontSize: 25, color: Colors.white),
