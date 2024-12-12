@@ -1,3 +1,4 @@
+import 'package:bookit/view/login_page.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -111,7 +112,13 @@ class _RegisterPageState extends State<RegisterPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5.0),
                             )),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        },
                         child: const Text(
                           "Already Have Registered?",
                           style: TextStyle(
