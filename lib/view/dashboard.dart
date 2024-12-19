@@ -5,11 +5,11 @@ void main() {
 }
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  const Dashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HotelDetailPage(),
     );
@@ -17,14 +17,16 @@ class Dashboard extends StatelessWidget {
 }
 
 class HotelDetailPage extends StatelessWidget {
+  const HotelDetailPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: Icon(Icons.arrow_back, color: Colors.black),
-        actions: [
+        leading: const Icon(Icons.arrow_back, color: Colors.black),
+        actions: const [
           Icon(Icons.favorite_border, color: Colors.black),
           SizedBox(width: 16),
         ],
@@ -46,12 +48,13 @@ class HotelDetailPage extends StatelessWidget {
                   top: 16,
                   left: 16,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Row(
+                    child: const Row(
                       children: [
                         Text('Interior', style: TextStyle(color: Colors.black)),
                         SizedBox(width: 8),
@@ -63,8 +66,8 @@ class HotelDetailPage extends StatelessWidget {
               ],
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -135,6 +138,9 @@ class HotelDetailPage extends StatelessWidget {
                       Text('More'),
                     ],
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -146,16 +152,11 @@ class HotelDetailPage extends StatelessWidget {
                   ),
 
                   SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Image.asset(
-                        "assets/icons/map.png",
-                        errorBuilder: (context, error, stackTrace) {
-                          return Text("Error Loading Image");
-                        },
-                      )
-                    ],
-                  )
+                  Text(
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  Text('Read more'),
 
                   // Map Section
                 ],
@@ -166,7 +167,7 @@ class HotelDetailPage extends StatelessWidget {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
