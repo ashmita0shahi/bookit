@@ -44,6 +44,8 @@ class _HotelDetailPageState extends State<HotelDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(),
@@ -54,12 +56,12 @@ class _HotelDetailPageState extends State<HotelDetailPage> {
           title: Row(
             children: [
               const Icon(Icons.arrow_back, color: Colors.black),
-              const SizedBox(width: 20),
+              SizedBox(width: size.width * 0.03),
               Flexible(
                 child: Center(
                   child: SizedBox(
-                    height: 40,
-                    width: 250,
+                    height: size.height * 0.06,
+                    width: size.width * 0.6,
                     child: TextField(
                       decoration: InputDecoration(
                         hintText: "Search",
@@ -67,7 +69,7 @@ class _HotelDetailPageState extends State<HotelDetailPage> {
                             color: Color.fromARGB(255, 0, 0, 0)),
                         filled: true,
                         fillColor: const Color.fromARGB(255, 255, 255, 255),
-                        contentPadding: const EdgeInsets.all(5),
+                        contentPadding: EdgeInsets.all(size.height * 0.01),
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                           borderSide:
@@ -85,9 +87,10 @@ class _HotelDetailPageState extends State<HotelDetailPage> {
             ],
           ),
           centerTitle: true,
-          actions: const [
-            Icon(Icons.favorite_border, color: Colors.black),
-            SizedBox(width: 16),
+          actions: [
+            Icon(Icons.favorite_border,
+                color: Colors.black, size: size.width * 0.06),
+            SizedBox(width: size.width * 0.04),
           ],
         ),
         body: _screens[_selectedIndex],
@@ -101,15 +104,15 @@ class _HotelDetailPageState extends State<HotelDetailPage> {
           type: BottomNavigationBarType.fixed,
           items: [
             BottomNavigationBarItem(
-              icon: _buildNavItem(Icons.home, 0),
+              icon: _buildNavItem(Icons.home, 0, size),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: _buildNavItem(Icons.bookmark, 1),
+              icon: _buildNavItem(Icons.bookmark, 1, size),
               label: 'Booked',
             ),
             BottomNavigationBarItem(
-              icon: _buildNavItem(Icons.person, 2),
+              icon: _buildNavItem(Icons.person, 2, size),
               label: 'Profile',
             ),
           ],
@@ -118,9 +121,9 @@ class _HotelDetailPageState extends State<HotelDetailPage> {
     );
   }
 
-  Widget _buildNavItem(IconData icon, int index) {
+  Widget _buildNavItem(IconData icon, int index, Size size) {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: EdgeInsets.all(size.height * 0.01),
       decoration: BoxDecoration(
         color: _selectedIndex == index ? Colors.blue : Colors.transparent,
         shape: BoxShape.circle,
@@ -128,6 +131,7 @@ class _HotelDetailPageState extends State<HotelDetailPage> {
       child: Icon(
         icon,
         color: _selectedIndex == index ? Colors.white : Colors.grey,
+        size: size.width * 0.06,
       ),
     );
   }

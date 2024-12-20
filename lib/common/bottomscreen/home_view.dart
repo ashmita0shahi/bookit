@@ -10,6 +10,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -20,16 +22,18 @@ class _HomeViewState extends State<HomeView> {
               children: [
                 Image.asset(
                   'assets/images/hotel.png', // Replace with actual image path
-                  width: double.infinity,
-                  height: 250,
+                  width: size.width,
+                  height: size.height * 0.3,
                   fit: BoxFit.cover,
                 ),
                 Positioned(
                   top: 16,
                   left: 16,
                   child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: size.width * 0.02,
+                      vertical: size.height * 0.01,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -45,8 +49,8 @@ class _HomeViewState extends State<HomeView> {
                 ),
               ],
             ),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: EdgeInsets.all(size.width * 0.04),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,16 +64,20 @@ class _HomeViewState extends State<HomeView> {
                           Text(
                             'Hotel Diamond Palace',
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: size.width * 0.05,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 4),
+                          SizedBox(height: size.height * 0.01),
                           Row(
                             children: [
-                              Icon(Icons.star, color: Colors.orange, size: 16),
-                              SizedBox(width: 4),
-                              Text('4.2', style: TextStyle(fontSize: 14)),
+                              Icon(Icons.star,
+                                  color: Colors.orange,
+                                  size: size.width * 0.04),
+                              SizedBox(width: size.width * 0.01),
+                              Text('4.2',
+                                  style:
+                                      TextStyle(fontSize: size.width * 0.035)),
                             ],
                           ),
                         ],
@@ -77,31 +85,40 @@ class _HomeViewState extends State<HomeView> {
                       Text(
                         'NRS.3,493',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: size.width * 0.05,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
 
-                  SizedBox(height: 16),
+                  SizedBox(height: size.height * 0.02),
 
                   // About the Hotel Section
                   Text(
                     'About the Hotel',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: size.width * 0.045,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: size.height * 0.01),
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra.',
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: size.width * 0.035,
+                      color: Colors.grey,
+                    ),
                   ),
-                  Text('Read more'),
+                  Text(
+                    'Read more',
+                    style: TextStyle(
+                      fontSize: size.width * 0.035,
+                      color: Colors.blue,
+                    ),
+                  ),
 
-                  SizedBox(height: 16),
+                  SizedBox(height: size.height * 0.02),
 
                   // What this Place Offers
                   Row(
@@ -110,32 +127,49 @@ class _HomeViewState extends State<HomeView> {
                       Text(
                         'What this Place Offers',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: size.width * 0.045,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Text('More'),
+                      Text(
+                        'More',
+                        style: TextStyle(
+                          fontSize: size.width * 0.035,
+                          color: Colors.blue,
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: size.height * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Icon(Icons.wifi, size: 30, color: Colors.blue),
-                      Icon(Icons.local_parking, size: 30, color: Colors.blue),
-                      Icon(Icons.pool, size: 30, color: Colors.blue),
-                      Icon(Icons.local_taxi, size: 30, color: Colors.blue),
+                      Icon(Icons.wifi,
+                          size: size.width * 0.08, color: Colors.blue),
+                      Icon(Icons.local_parking,
+                          size: size.width * 0.08, color: Colors.blue),
+                      Icon(Icons.pool,
+                          size: size.width * 0.08, color: Colors.blue),
+                      Icon(Icons.local_taxi,
+                          size: size.width * 0.08, color: Colors.blue),
                     ],
                   ),
 
-                  SizedBox(height: 16),
+                  SizedBox(height: size.height * 0.02),
                   Text(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero',
-                    style: TextStyle(color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: size.width * 0.035,
+                      color: Colors.grey,
+                    ),
                   ),
-                  Text('Read more'),
+                  Text(
+                    'Read more',
+                    style: TextStyle(
+                      fontSize: size.width * 0.035,
+                      color: Colors.blue,
+                    ),
+                  ),
 
                   // Map Section
                 ],
