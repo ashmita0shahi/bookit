@@ -1,3 +1,4 @@
+import 'package:bookit/core/app_theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatefulWidget {
@@ -10,6 +11,12 @@ class ProfileView extends StatefulWidget {
 class _ProfileViewState extends State<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Profile"));
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: getApplicationTheme(),
+      home: const Scaffold(
+        body: Center(child: Text("Profile Page")),
+      ),
+    );
   }
 }

@@ -10,6 +10,7 @@ class BookedView extends StatefulWidget {
 class _BookedViewState extends State<BookedView> {
   @override
   Widget build(BuildContext context) {
+    
     return const Center(child: Text("Booked"));
   }
 }

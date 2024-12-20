@@ -48,25 +48,86 @@ class _HotelDetailPageState extends State<HotelDetailPage> {
       debugShowCheckedModeBanner: false,
       theme: getApplicationTheme(),
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0,
+          title: Row(
+            children: [
+              const Icon(Icons.arrow_back, color: Colors.black),
+              const SizedBox(width: 20),
+              Flexible(
+                child: Center(
+                  child: SizedBox(
+                    height: 40,
+                    width: 250,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Search",
+                        prefixIcon: const Icon(Icons.search,
+                            color: Color.fromARGB(255, 0, 0, 0)),
+                        filled: true,
+                        fillColor: const Color.fromARGB(255, 255, 255, 255),
+                        contentPadding: const EdgeInsets.all(5),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide:
+                              const BorderSide(color: Colors.black, width: 1),
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          centerTitle: true,
+          actions: const [
+            Icon(Icons.favorite_border, color: Colors.black),
+            SizedBox(width: 16),
+          ],
+        ),
         body: _screens[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
-          items: const [
+          backgroundColor: Colors.white,
+          selectedItemColor: Colors.white,
+          unselectedItemColor: const Color.fromARGB(255, 0, 0, 0),
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: _buildNavItem(Icons.home, 0),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.bookmark),
+              icon: _buildNavItem(Icons.bookmark, 1),
               label: 'Booked',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: _buildNavItem(Icons.person, 2),
               label: 'Profile',
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(IconData icon, int index) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: _selectedIndex == index ? Colors.blue : Colors.transparent,
+        shape: BoxShape.circle,
+      ),
+      child: Icon(
+        icon,
+        color: _selectedIndex == index ? Colors.white : Colors.grey,
       ),
     );
   }

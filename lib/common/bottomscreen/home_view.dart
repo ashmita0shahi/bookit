@@ -11,20 +11,6 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: const Icon(Icons.arrow_back, color: Colors.black),
-        title: const Text(
-          "Room 412",
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        actions: const [
-          Icon(Icons.favorite_border, color: Colors.black),
-          SizedBox(width: 16),
-        ],
-      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
