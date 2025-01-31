@@ -13,10 +13,20 @@ class LocalDatabaseFailure extends Failure {
   const LocalDatabaseFailure({required super.message});
 }
 
+class RemoteDatabaseFailure extends Failure {
+  const RemoteDatabaseFailure({required super.message});
+}
+
 class ApiFailure extends Failure {
-  final int statusCode;
-  const ApiFailure(
-    this.statusCode, {
+  final int? statusCode;
+  const ApiFailure({
+    this.statusCode,
+    required super.message,
+  });
+}
+
+class SharedPrefsFailure extends Failure {
+  const SharedPrefsFailure({
     required super.message,
   });
 }
