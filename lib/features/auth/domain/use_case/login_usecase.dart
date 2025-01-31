@@ -29,6 +29,6 @@ class LoginUseCase implements UsecaseWithParams<String, LoginParams> {
 
   @override
   Future<Either<Failure, String>> call(LoginParams params) {
-    return repository.loginStudent(params.email, params.password);
+    return repository.loginUser(params.email, params.password);
   }
 }
