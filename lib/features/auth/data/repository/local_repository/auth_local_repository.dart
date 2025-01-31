@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../../../core/error/failure.dart';
@@ -21,12 +23,12 @@ class AuthLocalRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> loginStudent(
+  Future<Either<Failure, String>> loginUser(
     String email,
     String password,
   ) async {
     try {
-      final result = await _authLocalDataSource.loginStudent(email, password);
+      final result = await _authLocalDataSource.loginUser(email, password);
       return Right(result);
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));
@@ -34,13 +36,25 @@ class AuthLocalRepository implements IAuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> registerStudent(AuthEntity student) async {
+  Future<Either<Failure, void>> registerUser(AuthEntity user) async {
     try {
-      await _authLocalDataSource.registerStudent(student);
+      await _authLocalDataSource.registerUser(user);
       return const Right(null);
     } catch (e) {
       return Left(LocalDatabaseFailure(message: e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadProfilePicture(File file) {
+    // TODO: implement uploadProfilePicture
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, void>> verifyEmail(String email, String otp) {
+    // TODO: implement verifyEmail
+    throw UnimplementedError();
   }
 
   // @override
