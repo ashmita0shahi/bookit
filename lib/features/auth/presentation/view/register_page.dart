@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:bookit/features/auth/presentation/view/login_page.dart';
 import 'package:bookit/features/auth/presentation/view_model/register/register_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../view_model/register/register_bloc.dart';
 import '../view_model/register/register_state.dart';
@@ -15,17 +19,39 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
+  checkCameraPermission() async {
+    if (await Permission.camera.request().isRestricted ||
+        await Permission.camera.request().isDenied) {
+      await Permission.camera.request();
+    }
+  }
+
+  File? _img;
+  Future _browseImage(ImageSource imageSource) async {
+    try {
+      final image = await ImagePicker().pickImage(source: imageSource);
+      if (image != null) {
+        setState(() {
+          _img = File(image.path);
+          // Send image to server
+          // context.read<RegisterBloc>().add(
+          //       LoadImage(file: _img!),
+          //     );
+        });
+      } else {
+        return;
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override
@@ -35,13 +61,13 @@ class _RegisterPageState extends State<RegisterPage> {
       body: BlocConsumer<RegisterBloc, RegisterState>(
         listener: (context, state) {
           if (state.isSuccess == true) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Registration Successful")),
-            );
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-            );
+            // ScaffoldMessenger.of(context).showSnackBar(
+            //   const SnackBar(content: Text("Registration Successful")),
+            // );
+            // Navigator.pushReplacement(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => LoginPage()),
+            // );
           } else if (state.errorMessage.isNotEmpty ?? false) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.errorMessage)),
@@ -51,20 +77,19 @@ class _RegisterPageState extends State<RegisterPage> {
         builder: (context, state) {
           return SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(40),
               child: Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 30),
-                    Center(
-                      child: Image.asset(
-                        "assets/icons/logo.png",
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 5),
+                    // Center(
+                    //   child: Image.asset(
+                    //     "assets/icons/logo.png",
+                    //     fit: BoxFit.fill,
+                    //   ),
+                    // ),
                     const Text(
                       'Register',
                       style: TextStyle(
@@ -72,16 +97,111 @@ class _RegisterPageState extends State<RegisterPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 20),
+                    InkWell(
+                      onTap: () {
+                        showModalBottomSheet(
+                          backgroundColor: Colors.grey[300],
+                          context: context,
+                          isScrollControlled: true,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(10),
+                            ),
+                          ),
+                          builder: (context) => Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    checkCameraPermission();
+                                    _browseImage(ImageSource.camera);
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(Icons.camera),
+                                  label: const Text('Camera'),
+                                ),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    _browseImage(ImageSource.gallery);
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(Icons.image),
+                                  label: const Text('Gallery'),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        height: 150,
+                        width: 150,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: _img != null
+                              ? FileImage(_img!)
+                              : const AssetImage('assets/images/hotel.png')
+                                  as ImageProvider,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: _fullNameController,
+                      decoration: const InputDecoration(
+                        labelText: "Full Name",
+                        labelStyle: TextStyle(color: Colors.black),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.person, color: Colors.teal),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your full name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: _addressController,
+                      decoration: const InputDecoration(
+                        labelText: "Address",
+                        labelStyle: TextStyle(color: Colors.black),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.person, color: Colors.teal),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your address';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    // Phone Number Field
+                    TextFormField(
+                      controller: _phoneController,
+                      keyboardType: TextInputType.phone,
+                      decoration: const InputDecoration(
+                        labelText: "Phone Number",
+                        labelStyle: TextStyle(color: Colors.black),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.phone, color: Colors.teal),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    // Email Field
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your email',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                      decoration: const InputDecoration(
+                        labelText: "Email",
+                        labelStyle: TextStyle(color: Colors.black),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.email, color: Colors.teal),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -92,16 +212,16 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
+                    // Password Field
                     TextFormField(
                       controller: _passwordController,
                       obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Enter your password',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                      decoration: const InputDecoration(
+                        labelText: "Password",
+                        labelStyle: TextStyle(color: Colors.black),
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.lock, color: Colors.teal),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -112,16 +232,17 @@ class _RegisterPageState extends State<RegisterPage> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
+                    // Confirm Password Field
                     TextFormField(
                       controller: _confirmPasswordController,
                       obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'Confirm Password',
-                        hintText: 'Enter your password again',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                      decoration: const InputDecoration(
+                        labelText: "Confirm Password",
+                        labelStyle: TextStyle(color: Colors.black),
+                        border: OutlineInputBorder(),
+                        prefixIcon:
+                            Icon(Icons.lock_outline, color: Colors.teal),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -167,12 +288,16 @@ class _RegisterPageState extends State<RegisterPage> {
                             onPressed: () {
                               if (_formKey.currentState?.validate() ?? false) {
                                 context.read<RegisterBloc>().add(
-                                      RegisterStudentEvent(
+                                      RegisterUserEvent(
                                         context: context,
+                                        fullname: _fullNameController.text,
+                                        phoneNo: _phoneController.text,
+                                        address: _addressController.text,
                                         email: _emailController.text,
                                         password: _passwordController.text,
                                         confirmPassword:
                                             _confirmPasswordController.text,
+                                        file: _img!,
                                       ),
                                     );
                               }
