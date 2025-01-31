@@ -1,6 +1,16 @@
-import 'package:bookit/app.dart';
+import 'package:bookit/app/app.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'app/di/di.dart';
+import 'core/network/hive_service.dart';
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await HiveService.init();
+
+  // Initialize dependencies (including Hive)
+  await initDependencies();
+
   runApp(const MyApp());
 }

@@ -1,4 +1,4 @@
-import 'package:bookit/core/app_theme/app_theme.dart';
+import 'package:bookit/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class ProfileView extends StatefulWidget {

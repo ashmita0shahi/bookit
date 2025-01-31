@@ -1,4 +1,4 @@
-import 'package:bookit/view/login_page.dart';
+import 'package:bookit/features/auth/presentation/view/login_page.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -138,7 +138,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: const Text('Finish'),

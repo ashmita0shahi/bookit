@@ -1,7 +1,7 @@
-import 'package:bookit/common/bottomscreen/booked_view.dart';
-import 'package:bookit/common/bottomscreen/home_view.dart';
-import 'package:bookit/common/bottomscreen/profile_view.dart';
-import 'package:bookit/core/app_theme/app_theme.dart';
+import 'package:bookit/features/home/presentation/view/bottomscreen/booked_view.dart';
+import 'package:bookit/features/home/presentation/view/bottomscreen/home_view.dart';
+import 'package:bookit/features/home/presentation/view/bottomscreen/profile_view.dart';
+import 'package:bookit/core/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
