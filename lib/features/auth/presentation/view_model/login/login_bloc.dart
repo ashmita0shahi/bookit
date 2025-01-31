@@ -1,12 +1,12 @@
-import 'package:bookit/app/di/di.dart';
-import 'package:bookit/features/auth/presentation/view_model/register/register_bloc.dart';
+import 'package:bookit/features/home/presentation/view/home.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../home/presentation/view/home.dart';
+import '../../../../../app/di/di.dart';
 import '../../../../home/presentation/view_model/home_cubit.dart';
 import '../../../domain/use_case/login_usecase.dart';
+import '../register/register_bloc.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -18,7 +18,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       : _loginUseCase = loginUseCase,
         super(LoginState.initial()) {
     // Handle Login Event
-    on<LoginStudentEvent>((event, emit) async {
+    on<LoginUserEvent>((event, emit) async {
       emit(state.copyWith(isLoading: true));
 
       final result = await _loginUseCase(
@@ -50,7 +50,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
     });
 
-    // Handle Navigation to Register Screen
     on<NavigateRegisterScreenEvent>((event, emit) {
       Navigator.push(
         event.context,
