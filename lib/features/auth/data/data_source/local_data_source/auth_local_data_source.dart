@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bookit/features/auth/data/model/auth_hive_model.dart';
 
 import '../../../../../core/network/hive_service.dart';
@@ -12,7 +14,10 @@ class AuthLocalDataSource implements IAuthDataSource {
   @override
   Future<AuthEntity> getCurrentUser() {
     return Future.value(const AuthEntity(
-      id: "1",
+      userId: "1",
+      fullname: "",
+      phoneNo: "",
+      address: "",
       email: "",
       password: "",
       // isAdmin: false,
@@ -20,7 +25,7 @@ class AuthLocalDataSource implements IAuthDataSource {
   }
 
   @override
-  Future<String> loginStudent(String email, String password) async {
+  Future<String> loginUser(String email, String password) async {
     try {
       final user = await _hiveService.login(email, password);
       if (user != null) {
@@ -34,11 +39,14 @@ class AuthLocalDataSource implements IAuthDataSource {
   }
 
   @override
-  Future<void> registerStudent(AuthEntity user) async {
+  Future<void> registerUser(AuthEntity user) async {
     try {
       // Convert AuthEntity to UserHiveModel
       final userHiveModel = UserHiveModel(
-        id: user.id,
+        id: user.userId,
+        fullname: user.fullname,
+        phoneNo: user.phoneNo,
+        address: user.address,
         email: user.email,
         password: user.password,
         // isAdmin: user.isAdmin,
@@ -49,6 +57,18 @@ class AuthLocalDataSource implements IAuthDataSource {
     } catch (e) {
       return Future.error(e);
     }
+  }
+
+  @override
+  Future<String> uploadProfilePicture(File file) {
+    // TODO: implement uploadProfilePicture
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> verifyEmail(String email, String otp) {
+    // TODO: implement verifyEmail
+    throw UnimplementedError();
   }
 
   // @override

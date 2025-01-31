@@ -1,11 +1,16 @@
+import 'dart:io';
+
 import '../../domain/entity/auth_entity.dart';
 
-abstract interface class IAuthDataSource {
-  Future<String> loginStudent(String email, String password);
 
-  Future<void> registerStudent(AuthEntity student);
+abstract interface class IAuthDataSource {
+  Future<String> loginUser(String username, String password);
+
+  Future<void> registerUser(AuthEntity user);
 
   Future<AuthEntity> getCurrentUser();
 
-  // Future<String> uploadProfilePicture(File file);
+  Future<void> verifyEmail(String email, String otp);
+
+  Future<String> uploadProfilePicture(File file);
 }
