@@ -15,6 +15,13 @@ import '../../features/auth/domain/use_case/verify_usecase.dart';
 import '../../features/auth/presentation/view_model/login/login_bloc.dart';
 import '../../features/auth/presentation/view_model/register/register_bloc.dart';
 import '../../features/home/presentation/view_model/home_cubit.dart';
+import '../../features/rooms/data/data_source/room_local_data_source.dart';
+import '../../features/rooms/data/data_source/room_remote_data_source.dart';
+import '../../features/rooms/data/repository/room_local_repository.dart';
+import '../../features/rooms/data/repository/room_remote_repository.dart';
+import '../../features/rooms/domain/use_case/get_room_by_id_usecase.dart';
+import '../../features/rooms/domain/use_case/get_room_usecase.dart';
+import '../../features/rooms/presentation/view_model/room_bloc.dart';
 import '../shared_prefs/token_shared_prefs.dart';
 
 final getIt = GetIt.instance;
@@ -26,6 +33,7 @@ Future<void> initDependencies() async {
   await _initLoginDependencies();
   await _initSignupDependencies();
   _initHomeDependencies();
+  _initRoomDependencies();
 }
 
 Future<void> _initSharedPreferences() async {
@@ -46,6 +54,45 @@ void _initHiveService() {
 void _initHomeDependencies() {
   getIt.registerFactory<HomeCubit>(
     () => HomeCubit(),
+  );
+}
+
+void _initRoomDependencies() {
+  // Room Data Sources
+  getIt.registerLazySingleton<RoomLocalDataSource>(
+    () => RoomLocalDataSource(hiveService: getIt<HiveService>()),
+  );
+
+  getIt.registerLazySingleton<RoomRemoteDataSource>(
+    () => RoomRemoteDataSource(dio: getIt<Dio>()),
+  );
+
+  // Room Repositories
+  getIt.registerLazySingleton<RoomLocalRepository>(
+    () =>
+        RoomLocalRepository(roomLocalDataSource: getIt<RoomLocalDataSource>()),
+  );
+
+  getIt.registerLazySingleton<RoomRemoteRepository>(
+    () => RoomRemoteRepository(
+        roomRemoteDataSource: getIt<RoomRemoteDataSource>()),
+  );
+
+  // Room Use Cases
+  getIt.registerLazySingleton<GetRoomsUseCase>(
+    () => GetRoomsUseCase(roomRepository: getIt<RoomRemoteRepository>()),
+  );
+
+  getIt.registerLazySingleton<GetRoomByIdUseCase>(
+    () => GetRoomByIdUseCase(roomRepository: getIt<RoomRemoteRepository>()),
+  );
+
+  // Room Bloc
+  getIt.registerFactory<RoomBloc>(
+    () => RoomBloc(
+      getRoomsUseCase: getIt<GetRoomsUseCase>(),
+      getRoomByIdUseCase: getIt<GetRoomByIdUseCase>(),
+    ),
   );
 }
 

@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../features/auth/data/model/auth_hive_model.dart';
+import '../../features/rooms/data/model/room_hive_model.dart';
 
 class HiveService {
   static Future<void> init() async {
@@ -14,6 +15,7 @@ class HiveService {
 
     // Register Adapters
     Hive.registerAdapter(UserHiveModelAdapter());
+    Hive.registerAdapter(RoomHiveModelAdapter());
   }
 
   // User Queries
@@ -61,5 +63,31 @@ class HiveService {
   // Close Hive Database
   Future<void> close() async {
     await Hive.close();
+  }
+
+  // Room Queries
+
+// Add or Register a Room
+  Future<void> addRoom(RoomHiveModel room) async {
+    var box = await Hive.openBox<RoomHiveModel>(HiveTableConstant.roomBox);
+    await box.put(room.roomId, room);
+  }
+
+// Delete a Room by ID
+  Future<void> deleteRoom(String roomId) async {
+    var box = await Hive.openBox<RoomHiveModel>(HiveTableConstant.roomBox);
+    await box.delete(roomId);
+  }
+
+// Get All Rooms
+  Future<List<RoomHiveModel>> getAllRooms() async {
+    var box = await Hive.openBox<RoomHiveModel>(HiveTableConstant.roomBox);
+    return box.values.toList();
+  }
+
+// Get Room by ID
+  Future<RoomHiveModel?> getRoomById(String roomId) async {
+    var box = await Hive.openBox<RoomHiveModel>(HiveTableConstant.roomBox);
+    return box.get(roomId);
   }
 }

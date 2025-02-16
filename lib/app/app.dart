@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../features/auth/presentation/view_model/login/login_bloc.dart';
 import '../features/auth/presentation/view_model/register/register_bloc.dart';
 import '../features/home/presentation/view_model/home_cubit.dart';
+import '../features/rooms/presentation/view_model/room_bloc.dart';
+import '../features/rooms/presentation/view_model/room_event.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -22,6 +24,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<HomeCubit>(
           create: (_) => getIt<HomeCubit>(),
+        ),
+                BlocProvider<RoomBloc>(
+          create: (_) => getIt<RoomBloc>()..add(GetRoomsEvent()),  // Add RoomBloc here
         ),
       ],
       child: MaterialApp(

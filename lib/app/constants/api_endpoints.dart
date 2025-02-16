@@ -13,4 +13,19 @@ class ApiEndpoints {
   static const String verifyEmail = "users/verify-otp";
   // static const String imageUrl = "http://10.0.2.2:1500/uploads/";
   static const String uploadImage = "auth/uploadImage";
+
+  // ====================== Booking Routes ======================
+  static const String bookRoom = "bookings/book";
+  static const String getAllBookings = "bookings/all";
+  static const String getUserBookings = "bookings/getbooking";
+  static const String confirmBooking = "bookings/confirm";
+
+
+  // ====================== Room Routes ======================
+  static const String getAllRooms = "rooms/";
+  static const String getRoomById = "rooms/";
+  static const String createRoom = "rooms/";
+  static const String updateRoomAvailability = "rooms/";
+  static const String deleteRoom = "rooms/";
+
 }

@@ -29,7 +29,7 @@ class LoginPage extends StatelessWidget {
             Navigator.pop(context); // Dismiss loading dialog
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const Dashboard()),
+              MaterialPageRoute(builder: (context) => const HotelDetailPage()),
             );
           } else {
             Navigator.pop(context); // Dismiss loading dialog
