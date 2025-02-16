@@ -43,7 +43,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           Navigator.pushReplacement(
             event.context,
             MaterialPageRoute(
-              builder: (context) => const Dashboard(),
+              builder: (context) => const HotelDetailPage(),
             ),
           );
         },
