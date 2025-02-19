@@ -42,4 +42,6 @@ class RoomEntity extends Equatable {
         available,
         images,
       ];
+
+  get id => null;
 }

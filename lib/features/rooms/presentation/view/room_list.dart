@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entity/room_entity.dart';
 import '../view_model/room_bloc.dart';
+import '../view_model/room_event.dart';
 import '../view_model/room_state.dart';
 import 'room_detail_screen.dart'; // Room Detail Screen to navigate to
 
@@ -11,6 +12,9 @@ class RoomListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Dispatch the event to fetch rooms when widget is loaded
+    context.read<RoomBloc>().add(GetRoomsEvent());
+
     return Scaffold(
       body: BlocBuilder<RoomBloc, RoomState>(
         builder: (context, state) {
@@ -19,11 +23,13 @@ class RoomListScreen extends StatelessWidget {
           } else if (state is RoomError) {
             return Center(child: Text(state.message));
           } else if (state is RoomsLoaded) {
-            final rooms = state.rooms;
+            if (state.rooms.isEmpty) {
+              return const Center(child: Text('No rooms available.'));
+            }
             return ListView.builder(
-              itemCount: rooms.length,
+              itemCount: state.rooms.length,
               itemBuilder: (context, index) {
-                final room = rooms[index];
+                final room = state.rooms[index];
                 return RoomCard(
                   room: room,
                   onTap: () {
@@ -38,7 +44,7 @@ class RoomListScreen extends StatelessWidget {
               },
             );
           }
-          return const Center(child: Text('No rooms available.'));
+          return const Center(child: Text('Something went wrong.'));
         },
       ),
     );
