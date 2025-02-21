@@ -24,6 +24,28 @@ class LoginParams extends Equatable {
   List<Object> get props => [email, password];
 }
 
+// class LoginUseCase implements UsecaseWithParams<String, LoginParams> {
+//   final IAuthRepository repository;
+//   final TokenSharedPrefs tokenSharedPrefs;
+
+//   LoginUseCase(this.repository, this.tokenSharedPrefs);
+
+//   @override
+//   Future<Either<Failure, String>> call(LoginParams params) async {
+//     final result = await repository.loginUser(params.email, params.password);
+
+//     return result.fold(
+//       (failure) => Left(failure), // Return failure if login fails
+//       (token) async {
+//         await tokenSharedPrefs.saveToken(token);
+//         final savedToken = await tokenSharedPrefs.getToken();
+//         print(savedToken);
+//         return Right(token);
+//       },
+//     );
+//   }
+// }
+
 class LoginUseCase implements UsecaseWithParams<String, LoginParams> {
   final IAuthRepository repository;
   final TokenSharedPrefs tokenSharedPrefs;
@@ -35,11 +57,15 @@ class LoginUseCase implements UsecaseWithParams<String, LoginParams> {
     final result = await repository.loginUser(params.email, params.password);
 
     return result.fold(
-      (failure) => Left(failure), // Return failure if login fails
+      (failure) => Left(failure),
       (token) async {
+        print("✅ Token Received: $token"); // Debug Log
+
         await tokenSharedPrefs.saveToken(token);
         final savedToken = await tokenSharedPrefs.getToken();
-        print(savedToken);
+
+        print("🔑 Stored Token: $savedToken"); // Debugging log
+
         return Right(token);
       },
     );

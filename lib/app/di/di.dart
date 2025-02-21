@@ -15,6 +15,11 @@ import '../../features/auth/domain/use_case/verify_usecase.dart';
 import '../../features/auth/presentation/view_model/login/login_bloc.dart';
 import '../../features/auth/presentation/view_model/register/register_bloc.dart';
 import '../../features/home/presentation/view_model/home_cubit.dart';
+import '../../features/profile/data/data_source/user_remote_data_source.dart';
+import '../../features/profile/data/repository/user_remote_repository.dart';
+import '../../features/profile/domain/repository/user_repository.dart';
+import '../../features/profile/domain/use_case/get_user_profile_usecase.dart';
+import '../../features/profile/presentation/view_model/user_bloc.dart';
 import '../../features/rooms/data/data_source/room_local_data_source.dart';
 import '../../features/rooms/data/data_source/room_remote_data_source.dart';
 import '../../features/rooms/data/repository/room_local_repository.dart';
@@ -32,8 +37,11 @@ Future<void> initDependencies() async {
   await _initSharedPreferences();
   await _initLoginDependencies();
   await _initSignupDependencies();
+  _initUserDependencies(); // ✅ Add this for UserBloc
+
   _initHomeDependencies();
   _initRoomDependencies();
+  // _initUserDependencies(); // ✅ Add this for UserBloc
 }
 
 Future<void> _initSharedPreferences() async {
@@ -155,5 +163,30 @@ Future<void> _initLoginDependencies() async {
       homeCubit: getIt<HomeCubit>(),
       loginUseCase: getIt<LoginUseCase>(),
     ),
+  );
+}
+
+void _initUserDependencies() {
+  // ✅ Register UserRemoteDataSource
+  getIt.registerLazySingleton<UserRemoteDataSource>(
+    () => UserRemoteDataSourceImpl(getIt<Dio>()),
+  );
+
+  // ✅ Register UserRepository
+  getIt.registerLazySingleton<UserRepository>(
+    () => UserRemoteRepositoryImpl(
+      getIt<UserRemoteDataSource>(),
+      getIt<TokenSharedPrefs>(),
+    ),
+  );
+
+  // ✅ Register GetUserProfileUseCase
+  getIt.registerLazySingleton<GetUserProfileUseCase>(
+    () => GetUserProfileUseCase(getIt<UserRepository>()),
+  );
+
+  // ✅ Register UserBloc
+  getIt.registerFactory<UserBloc>(
+    () => UserBloc(getIt<GetUserProfileUseCase>()),
   );
 }

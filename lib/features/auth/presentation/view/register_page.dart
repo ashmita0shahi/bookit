@@ -41,10 +41,6 @@ class _RegisterPageState extends State<RegisterPage> {
       if (image != null) {
         setState(() {
           _img = File(image.path);
-          // Send image to server
-          // context.read<RegisterBloc>().add(
-          //       LoadImage(file: _img!),
-          //     );
         });
       } else {
         return;

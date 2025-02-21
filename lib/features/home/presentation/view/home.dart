@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../profile/presentation/view/user_profile_view.dart';
 import '../../../rooms/presentation/view/room_list.dart';
 import 'bottomscreen/booked_view.dart';
-import 'bottomscreen/profile_view.dart';
 
 class HotelDetailPage extends StatefulWidget {
   const HotelDetailPage({super.key});
@@ -17,7 +17,7 @@ class _HotelDetailPageState extends State<HotelDetailPage> {
   final List<Widget> _screens = [
     const RoomListScreen(),
     const BookedView(),
-    const ProfileView(),
+    const ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
