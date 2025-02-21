@@ -54,7 +54,6 @@ class AuthRemoteDataSource implements IAuthDataSource {
         "password": user.password,
         "image": await MultipartFile.fromFile(user.image!),
       });
-
       Response response = await _dio.post(
         ApiEndpoints.register,
         data: formData,

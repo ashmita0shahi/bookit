@@ -14,7 +14,7 @@ class AuthApiModel extends Equatable {
   final String phoneno;
   final String? image;
   final String email;
-  final String? password;
+  final String password; // ✅ Ensure password is NOT nullable
 
   const AuthApiModel({
     this.userId,
@@ -23,15 +23,14 @@ class AuthApiModel extends Equatable {
     required this.phoneno,
     required this.image,
     required this.email,
-    required this.password,
+    required this.password, // ✅ Ensure password is always required
   });
 
   factory AuthApiModel.fromJson(Map<String, dynamic> json) =>
       _$AuthApiModelFromJson(json);
   Map<String, dynamic> toJson() => _$AuthApiModelToJson(this);
 
-  //toEntity
-
+  // toEntity
   AuthEntity toEntity() {
     return AuthEntity(
       userId: userId,
@@ -40,23 +39,11 @@ class AuthApiModel extends Equatable {
       image: image,
       phoneNo: phoneno,
       email: email,
-      password: password ?? '',
-    );
-  }
-
-  //from Entity
-  factory AuthApiModel.fromEntity(AuthEntity entity) {
-    return AuthApiModel(
-      fullname: entity.fullname,
-      address: entity.address,
-      image: entity.image,
-      phoneno: entity.phoneNo,
-      email: entity.email,
-      password: entity.password,
+      password: password, // ✅ Ensure password is passed correctly
     );
   }
 
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props =>
+      [userId, fullname, address, phoneno, image, email, password];
 }

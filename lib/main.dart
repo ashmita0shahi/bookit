@@ -10,6 +10,7 @@ void main() async {
 
   // Initialize dependencies (including Hive)
   await initDependencies();
-
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
