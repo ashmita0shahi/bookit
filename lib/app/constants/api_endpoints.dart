@@ -3,8 +3,10 @@ class ApiEndpoints {
 
   static const Duration connectionTimeout = Duration(seconds: 1000);
   static const Duration receiveTimeout = Duration(seconds: 1000);
-  static const String baseUrl = "http://10.0.2.2:3000/api/";
-  // static const String baseUrl = "http://192.168.1.76:3000/api/";
+  //static const String baseUrl = "http://10.0.2.2:3000/api/";
+  static const String baseUrl = "http://192.168.1.76:3000/api/";
+  // static const String baseUrl = "http://192.168.1.196:3000/api/";
+
   // static const String baseUrl = "http://192.168.101.21:3000/api/";
 
   // For iPhone

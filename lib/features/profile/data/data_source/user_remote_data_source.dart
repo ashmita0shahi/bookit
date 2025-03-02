@@ -8,40 +8,6 @@ abstract class UserRemoteDataSource {
   Future<AuthApiModel> getUserProfile(String userId, String token);
 }
 
-// class UserRemoteDataSourceImpl implements UserRemoteDataSource {
-//   final Dio dio; // ✅ Use Dio directly
-
-//   UserRemoteDataSourceImpl(this.dio);
-
-//   @override
-//   Future<AuthApiModel> getUserProfile(String userId, String token) async {
-//     try {
-//       final String url =
-//           "${ApiEndpoints.getuser}$userId"; // ✅ Use `ApiEndpoints.getuser`
-
-//       print("📡 Fetching User Profile from: $url");
-
-//       final response = await dio.get(
-//         url,
-//         options: Options(headers: {"Authorization": "Bearer $token"}),
-//       );
-
-//       print("✅ API Response: ${response.data}");
-
-//       if (response.statusCode == 200) {
-//         return AuthApiModel.fromJson(response.data);
-//       } else {
-//         throw ApiFailure(
-//             message:
-//                 "Failed to fetch user profile: ${response.data['message']}");
-//       }
-//     } catch (e) {
-//       print("❌ Error in getUserProfile: $e");
-//       throw ApiFailure(message: e.toString());
-//     }
-//   }
-// }
-
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final Dio dio; // ✅ Inject Dio instead of ApiService
 

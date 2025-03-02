@@ -112,7 +112,7 @@ class _RoomDetailScreenState extends State<RoomDetailScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => (context),
-                    child: const Text('Pay with Khalti'),
+                    child: const Text('Book room'),
                   ),
                 ],
               ),
